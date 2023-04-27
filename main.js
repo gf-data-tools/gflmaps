@@ -1,8 +1,8 @@
 (function(){
 
 var config = {
-  langCode: "en",
-  dataSource: "cn",
+  langCode: "ch",
+  dataSource: "ch",
   shouldLoadChibis: true,
 };
 
@@ -348,10 +348,15 @@ const loadChibi = (code, redrawFunc) => {
 const loadData = async () => {
   const loadTextFile = (url) => fetch(url).then((result) => result.text());
   const loadJsonFile = (url) => fetch(url).then((result) => result.json());
+  const loadStcFile = (file) => loadJsonFile(`https://github.com/gf-data-tools/gf-data-${config.dataSource}/raw/main/stc/${file}`);
+  const loadCatchFile = (file) => loadJsonFile(`https://github.com/gf-data-tools/gf-data-${config.dataSource}/raw/main/catchdata/${file}`);
+  const loadTextTable = (file) => loadTextFile(`https://github.com/gf-data-tools/gf-data-${config.langCode}/raw/main/asset/table/${file}`);
+  const loadCnTextTable = (file) => loadTextFile(`https://github.com/gf-data-tools/gf-data-ch/raw/main/asset/table/${file}`);
+  
 
   const loaders = {
-    "Spot": loadJsonFile(`./data/${config.dataSource}/Spot.json`).then((result) => Spot = result),
-    "Enemy_in_team": loadJsonFile(`./data/${config.dataSource}/Enemy_in_team.json`).then((result) => {
+    "Spot": loadStcFile(`spot.json`).then((result) => Spot = result),
+    "Enemy_in_team": loadStcFile(`enemy_in_team.json`).then((result) => {
       Enemy_in_team = result;
 
       Enemy_in_team_by_team_id = {};
@@ -362,35 +367,35 @@ const loadData = async () => {
         Enemy_in_team_by_team_id[row.enemy_team_id].push(row);
       });
     }),
-    "Enemy_standard_attribute": loadJsonFile(`./data/${config.dataSource}/Enemy_standard_attribute.json`).then((result) => Enemy_standard_attribute = result),
-    "Enemy_team": loadJsonFile(`./data/${config.dataSource}/Enemy_team.json`).then((result) => {
+    "Enemy_standard_attribute": loadStcFile(`enemy_standard_attribute.json`).then((result) => Enemy_standard_attribute = result),
+    "Enemy_team": loadStcFile(`enemy_team.json`).then((result) => {
       Enemy_team = result;
       Enemy_team_map = Object.fromEntries(result.map((enemyTeam) => [enemyTeam.id, enemyTeam]));
     }),
-    "Theater_area": loadJsonFile(`./data/${config.dataSource}/Theater_area.json`).then((result) => Theater_area = result),
-    "Building": loadJsonFile(`./data/${config.dataSource}/Building.json`).then((result) => {
+    "Theater_area": loadStcFile(`theater_area.json`).then((result) => Theater_area = result),
+    "Building": loadStcFile(`building.json`).then((result) => {
       Building = result;
       BuildingMap = Object.fromEntries(result.map((building) => [building.id, building]));
     }),
-    "Mission": loadJsonFile(`./data/${config.dataSource}/Mission.json`).then((result) => {
+    "Mission": loadStcFile(`mission.json`).then((result) => {
       Mission = result;
       Mission_map = Object.fromEntries(result.map((mission) => [mission.id, mission]));
     }),
-    "Enemy_character_type": loadJsonFile(`./data/${config.dataSource}/Enemy_character_type.json`).then((result) => {
+    "Enemy_character_type": loadStcFile(`enemy_character_type.json`).then((result) => {
       Enemy_charater_type = result;
       Enemy_character_type_by_id = Object.fromEntries(result.map((enemy) => [enemy.id, enemy]));
     }),
-    "Ally_team": loadJsonFile(`./data/${config.dataSource}/Ally_team.json`).then((result) => Ally_team = result),
-    "Gun": loadJsonFile(`./data/${config.dataSource}/Gun.json`).then((result) => {
+    "Ally_team": loadStcFile(`ally_team.json`).then((result) => Ally_team = result),
+    "Gun": loadStcFile(`gun.json`).then((result) => {
       Gun = result;
       Gun_by_id = Object.fromEntries(result.map((gun) => [gun.id, gun]));
     }),
-    "Gun_in_ally": loadJsonFile(`./data/${config.dataSource}/Gun_in_ally.json`).then((result) => Gun_in_ally = result),
-    "Sangvis_in_ally": loadJsonFile(`./data/${config.dataSource}/Sangvis_in_ally.json`).then((result) => Sangvis_in_ally = result),
-    "equip_in_ally_info": loadJsonFile(`./data/${config.dataSource}/equip_in_ally_info.json`).then((result) => equip_in_ally_info = result["equip_in_ally_info"]),
-    "trial_info": loadJsonFile(`./data/${config.dataSource}/trial_info.json`).then((result) => trial_info = result["trial_info"]),
+    "Gun_in_ally": loadStcFile(`gun_in_ally.json`).then((result) => Gun_in_ally = result),
+    "Sangvis_in_ally": loadStcFile(`sangvis_in_ally.json`).then((result) => Sangvis_in_ally = result),
+    "equip_in_ally_info": loadCatchFile(`equip_in_ally_info.json`).then((result) => equip_in_ally_info = result),
+    "trial_info": loadCatchFile(`trial_info.json`).then((result) => trial_info = result),
     /*
-    "ConstructibleThings": loadJsonFile(`./data/${config.dataSource}/Recommended_formula.json`).then((result) => {
+    "ConstructibleThings": loadStcFile(`recommended_formula.json`).then((result) => {
       result.forEach((formula) => {
         if (formula.develop_type == 1 || formula.develop_type == 2) {
           [...formula.preview.matchAll(/(\d+)-0/g)].forEach((match) => ConstructibleDollIds.add(Number(match[1])));
@@ -404,28 +409,28 @@ const loadData = async () => {
       };
     }),
     // */
-    "Team_ai": loadJsonFile(`./data/${config.dataSource}/Team_ai.json`).then((result) => Team_ai = result),
-    "Mission_targettrain_enemy": loadJsonFile(`./data/${config.dataSource}/Mission_targettrain_enemy.json`).then((result) => Mission_targettrain_enemy = result),
+    "Team_ai": loadStcFile(`team_ai.json`).then((result) => Team_ai = result),
+    "Mission_targettrain_enemy": loadStcFile(`mission_targettrain_enemy.json`).then((result) => Mission_targettrain_enemy = result),
     "UI_TEXT": loadJsonFile(`./text/${config.langCode}/ui_text.json`).then((result) => UI_TEXT = result),
 
-    "Building_txt": loadTextFile(`./text/${config.langCode}/building.txt`).then((result) => Building_txt = result),
-    "Building_cn_txt": loadTextFile(`./text/cn/building.txt`).then((result) => Building_cn_txt = result),
-    "Equip_txt": loadTextFile(`./text/${config.langCode}/equip.txt`).then((result) => Equip_txt = result),
-    "Equip_cn_txt": loadTextFile(`./text/cn/equip.txt`).then((result) => Equip_cn_txt = result),
-    "Gun_txt": loadTextFile(`./text/${config.langCode}/gun.txt`).then((result) => Gun_txt = result),
-    "Gun_cn_txt": loadTextFile(`./text/cn/gun.txt`).then((result) => Gun_cn_txt = result),
-    "Sangvis_txt": loadTextFile(`./text/${config.langCode}/sangvis.txt`).then((result) => Sangvis_txt = result),
-    "Sangvis_cn_txt": loadTextFile(`./text/cn/sangvis.txt`).then((result) => Sangvis_cn_txt = result),
-    "Mission_txt": loadTextFile(`./text/${config.langCode}/mission.txt`).then((result) => Mission_txt = result),
-    "Mission_cn_txt": loadTextFile(`./text/cn/mission.txt`).then((result) => Mission_cn_txt = result),
-    "Enemy_charater_type_txt": loadTextFile(`./text/${config.langCode}/enemy_character_type.txt`).then((result) => Enemy_charater_type_txt = result),
-    "Enemy_character_type_cn_txt": loadTextFile(`./text/cn/enemy_character_type.txt`).then((result) => Enemy_charater_type_cn_txt = result),
-    "Ally_team_txt": loadTextFile(`./text/${config.langCode}/ally_team.txt`).then((result) => Ally_team_txt = result),
-    "Ally_team_cn_txt": loadTextFile(`./text/cn/ally_team.txt`).then((result) => Ally_team_cn_txt = result),
-    "Team_ai_txt": loadTextFile(`./text/${config.langCode}/team_ai.txt`).then((result) => Team_ai_txt = result),
-    "Mission_targettrain_enemy_txt": loadTextFile(`./text/${config.langCode}/mission_targettrain_enemy.txt`).then((result) => Mission_targettrain_enemy_txt = result),
-    "Mission_targettrain_enemy_cn_txt": loadTextFile(`./text/cn/mission_targettrain_enemy.txt`).then((result) => Mission_targettrain_enemy_cn_txt = result),
-    "Special_spot_config_txt": loadTextFile(`./text/${config.langCode}/special_spot_config.txt`).then((result) => Special_spot_config_txt = result),
+    "Building_txt": loadTextTable(`building.txt`).then((result) => Building_txt = result),
+    "Building_cn_txt": loadCnTextTable(`building.txt`).then((result) => Building_cn_txt = result),
+    "Equip_txt": loadTextTable(`equip.txt`).then((result) => Equip_txt = result),
+    "Equip_cn_txt": loadCnTextTable(`equip.txt`).then((result) => Equip_cn_txt = result),
+    "Gun_txt": loadTextTable(`gun.txt`).then((result) => Gun_txt = result),
+    "Gun_cn_txt": loadCnTextTable(`gun.txt`).then((result) => Gun_cn_txt = result),
+    "Sangvis_txt": loadTextTable(`sangvis.txt`).then((result) => Sangvis_txt = result),
+    "Sangvis_cn_txt": loadCnTextTable(`sangvis.txt`).then((result) => Sangvis_cn_txt = result),
+    "Mission_txt": loadTextTable(`mission.txt`).then((result) => Mission_txt = result),
+    "Mission_cn_txt": loadCnTextTable(`mission.txt`).then((result) => Mission_cn_txt = result),
+    "Enemy_charater_type_txt": loadTextTable(`enemy_character_type.txt`).then((result) => Enemy_charater_type_txt = result),
+    "Enemy_character_type_cn_txt": loadCnTextTable(`enemy_character_type.txt`).then((result) => Enemy_charater_type_cn_txt = result),
+    "Ally_team_txt": loadTextTable(`ally_team.txt`).then((result) => Ally_team_txt = result),
+    "Ally_team_cn_txt": loadCnTextTable(`ally_team.txt`).then((result) => Ally_team_cn_txt = result),
+    "Team_ai_txt": loadTextTable(`team_ai.txt`).then((result) => Team_ai_txt = result),
+    "Mission_targettrain_enemy_txt": loadTextTable(`mission_targettrain_enemy.txt`).then((result) => Mission_targettrain_enemy_txt = result),
+    "Mission_targettrain_enemy_cn_txt": loadCnTextTable(`mission_targettrain_enemy.txt`).then((result) => Mission_targettrain_enemy_cn_txt = result),
+    "Special_spot_config_txt": loadTextTable(`special_spot_config.txt`).then((result) => Special_spot_config_txt = result),
 
     "INSTRUCTIONS": loadTextFile(`./text/${config.langCode}/instructions.html`).then((result) => INSTRUCTIONS = result),
     
