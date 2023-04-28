@@ -159,14 +159,16 @@ function trans() {
     var namestr = namepos !== -1 ? Enemy_charater_type_txt.slice(namepos + Enemy_charater_type[i].name.length + 1, Enemy_charater_type_txt.indexOf("\n", namepos) - 1).trim().replace("//c", UI_TEXT["comma"]) : null;
     if (namestr) {
       Enemy_charater_type[i].name = namestr;
-      if (config.langCode!="ch" && wellKnownEnemyCodes.has(Enemy_charater_type[i].code)) {
-        // Certain enemies are known by their codes longer than their localized names, so their codes are
-        // added back for clarification.
-        Enemy_charater_type[i].name = `[${Enemy_charater_type[i].code}] ${namestr}`;
-      } else if (Enemy_charater_type[i].code.match(/swap/i) && !Enemy_charater_type[i].name.match(/swap/i)) {
-        // Add " [SWAP]" at the end of the name if the enemy code contains "SWAP" but the name does not.
-        // This is because the official English localization sometimes just omits this qualifier...
-        Enemy_charater_type[i].name += " [SWAP]";
+      if (config.langCode!="ch"){
+        if ( wellKnownEnemyCodes.has(Enemy_charater_type[i].code)) {
+          // Certain enemies are known by their codes longer than their localized names, so their codes are
+          // added back for clarification.
+          Enemy_charater_type[i].name = `[${Enemy_charater_type[i].code}] ${namestr}`;
+        } else if (Enemy_charater_type[i].code.match(/swap/i) && !Enemy_charater_type[i].name.match(/swap/i)) {
+          // Add " [SWAP]" at the end of the name if the enemy code contains "SWAP" but the name does not.
+          // This is because the official English localization sometimes just omits this qualifier...
+          Enemy_charater_type[i].name += " [SWAP]";
+        }
       }
     } else {
       let prefix = "";
