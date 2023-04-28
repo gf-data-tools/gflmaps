@@ -159,7 +159,7 @@ function trans() {
     var namestr = namepos !== -1 ? Enemy_charater_type_txt.slice(namepos + Enemy_charater_type[i].name.length + 1, Enemy_charater_type_txt.indexOf("\n", namepos) - 1).trim().replace("//c", UI_TEXT["comma"]) : null;
     if (namestr) {
       Enemy_charater_type[i].name = namestr;
-      if (wellKnownEnemyCodes.has(Enemy_charater_type[i].code)) {
+      if (config.langCode!="ch" && wellKnownEnemyCodes.has(Enemy_charater_type[i].code)) {
         // Certain enemies are known by their codes longer than their localized names, so their codes are
         // added back for clarification.
         Enemy_charater_type[i].name = `[${Enemy_charater_type[i].code}] ${namestr}`;
