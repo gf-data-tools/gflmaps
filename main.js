@@ -1596,7 +1596,7 @@ const generateEnemyTeamRow = (spot, enemy_team_id, spotAllyTeam, controllableAll
     <td width="160px">${teamLeader}<\/td>
     <td width="100px">${teamAlignment}<\/td>
     <td width="114px">${teamAIDisplay}<\/td>
-    <td width="100px">${teamCEPre208} / ${teamCEPost208}*<\/td>
+    <td width="100px">${teamCEPost208}<\/td>
     <td width="290px">${teamComposition}<\/td>
     <td width="200px">${rareDrops.join(", ")}<\/td>
     <td class="cella" width="120px" style="display:table-cell;">${teamLocation}<\/td>
