@@ -2004,8 +2004,7 @@ function drawmap(func){
                   : UI_TEXT["map_controllable_ally_infinite_supply"]);
             } else {
               enemySubtitle = "[" + spotinfo[i]["seai"] + "] "
-                + (spotinfo[i]["sefectPre208"] + (spotinfo[i]["hasFakeCeError"] ? 1 : 0)) + "/"
-                + (spotinfo[i]["sefectPost208"] + (spotinfo[i]["hasFakeCeError"] ? 1 : 0));
+                (spotinfo[i]["sefectPost208"]);
             }
             con.strokeText(enemySubtitle, coorchange(1, Number(dspot[i].coordinator_x), x_min), coorchange(2, Number(dspot[i].coordinator_y), y_min) + coorchange(3, 180));
             con.fillText(enemySubtitle, coorchange(1, Number(dspot[i].coordinator_x), x_min), coorchange(2, Number(dspot[i].coordinator_y), y_min) + coorchange(3, 180));
