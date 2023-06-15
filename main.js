@@ -156,7 +156,7 @@ function trans() {
 
   for(i in Enemy_charater_type) {
     var namepos = Enemy_charater_type_txt.indexOf(Enemy_charater_type[i].name);    
-    var namestr = namepos !== -1 ? Enemy_charater_type_txt.slice(namepos + Enemy_charater_type[i].name.length + 1, Enemy_charater_type_txt.indexOf("\n", namepos) - 1).trim().replace("//c", UI_TEXT["comma"]) : null;
+    var namestr = namepos !== -1 ? Enemy_charater_type_txt.slice(namepos + Enemy_charater_type[i].name.length + 1, Enemy_charater_type_txt.indexOf("\n", namepos)).trim().replace("//c", UI_TEXT["comma"]) : null;
     if (namestr) {
       Enemy_charater_type[i].name = namestr;
       if (config.langCode!="ch"){
@@ -205,7 +205,7 @@ function trans() {
 
   for (i in Team_ai) {
     var namepos = Team_ai_txt.indexOf(Team_ai[i].name);
-    var namestr = namepos !== -1 ? Team_ai_txt.slice(namepos + Team_ai[i].name.length + 1, Team_ai_txt.indexOf("\n", namepos) - 1).trim().replace("//c", UI_TEXT["comma"]) : null;
+    var namestr = namepos !== -1 ? Team_ai_txt.slice(namepos + Team_ai[i].name.length + 1, Team_ai_txt.indexOf("\n", namepos) ).trim().replace("//c", UI_TEXT["comma"]) : null;
     if (namestr) {
       Team_ai[i].name = namestr;
     } else {
@@ -2004,7 +2004,7 @@ function drawmap(func){
                   : UI_TEXT["map_controllable_ally_infinite_supply"]);
             } else {
               enemySubtitle = "[" + spotinfo[i]["seai"] + "] "
-                (spotinfo[i]["sefectPost208"]);
+                +(spotinfo[i]["sefectPost208"]);
             }
             con.strokeText(enemySubtitle, coorchange(1, Number(dspot[i].coordinator_x), x_min), coorchange(2, Number(dspot[i].coordinator_y), y_min) + coorchange(3, 180));
             con.fillText(enemySubtitle, coorchange(1, Number(dspot[i].coordinator_x), x_min), coorchange(2, Number(dspot[i].coordinator_y), y_min) + coorchange(3, 180));
