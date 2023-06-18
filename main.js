@@ -552,8 +552,8 @@ function convertGameCampaignToUiCampaign(gameCampaign) {
     // Christmas mini-event
     case -35: return 5035;
     // PL
-    case -36:
-    case -60: return 3036;
+    case -60: // Polarized+
+    case -36: return 3036;
     // Valentine's mini-event
     case -37: return 5037;
     // GSG
