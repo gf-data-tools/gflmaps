@@ -2481,7 +2481,7 @@ function enemydisplay(enemy_team_id){
         const guns = getAllyGuns(spotAllyTeam.guns.split(",").filter(id => !!id));
 
         const gunsRowsHtml = guns.map(gun => {
-          const equips = gun.equips.length ? gun.equips.map(equip => getEquipName(equip.equip_id)).join(",") : UI_TEXT["ally_no_equipment"];
+          const equips = gun.equips.length ? gun.equips.map(equip => getEquipName(equip.equip_id)+`Lv${equip.equip_level}`).join(",") : UI_TEXT["ally_no_equipment"];
           return `<tr class="enemyline" style="border-bottom:2px #f4c43033 solid; display:block;">
              <td class="enemycell" index="1" width="219px">${gun.name}<\/td>
              <td class="enemycell" index="2" width="59px">${gun.gunInAllyRow.number}<\/td>
