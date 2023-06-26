@@ -2389,7 +2389,7 @@ function enemyattribute(charatype , attr , level){
     var normalattr = Number(charatype[attr]);
     var normallevel = Number(charatype["level"]);
     if(!Enemy_standard_attribute[0][attr]) return bround(normalattr);
-    else if(attr == "def" && normalattr == 99999) return 0;
+    // else if(attr == "def" && normalattr == 99999) return 0;
 
     var thislevelfactor;
     for(var i = 0; i < Enemy_standard_attribute.length; i++){
@@ -2614,7 +2614,7 @@ function enemydisplay(enemy_team_id){
         let displayedValues = {};
         if (theaterLevelAdjustments) {
           displayedValues = {
-            level: (level % 1000 + theaterLevelAdjustments.min) + "-" + (level % 1000 + theaterLevelAdjustments.max),
+            level: (level + theaterLevelAdjustments.min) + "-" + (level + theaterLevelAdjustments.max),
             hp: getTheaterEnemyAttributeRange(charatype, "maxlife", level, theaterLevelAdjustments),
             pow: getTheaterEnemyAttributeRange(charatype, "pow", level, theaterLevelAdjustments),
             rate: getTheaterEnemyAttributeRange(charatype, "rate", level, theaterLevelAdjustments),
@@ -2633,9 +2633,9 @@ function enemydisplay(enemy_team_id){
         } else if (defDrillLevels) {
           const adjustments = {min: defDrillLevels.min - level, max: defDrillLevels.max - level};
           displayedValues = {
-            level: (defDrillLevels.min % 1000) === (defDrillLevels.max % 1000)
-              ? (defDrillLevels.min % 1000)
-              : (defDrillLevels.min % 1000) + "-" + (defDrillLevels.max % 1000),
+            level: (defDrillLevels.min) === (defDrillLevels.max)
+              ? (defDrillLevels.min)
+              : (defDrillLevels.min) + "-" + (defDrillLevels.max),
             hp: getTheaterEnemyAttributeRange(charatype, "maxlife", level, adjustments),
             pow: getTheaterEnemyAttributeRange(charatype, "pow", level, adjustments),
             rate: getTheaterEnemyAttributeRange(charatype, "rate", level, adjustments),
@@ -2653,7 +2653,7 @@ function enemydisplay(enemy_team_id){
           };
         } else {
           displayedValues = {
-            level: level % 1000,
+            level: level,
             hp: bround(enemyattribute(charatype , "maxlife" , level)),
             pow: enemyattribute(charatype , "pow" , level),
             rate: enemyattribute(charatype , "rate" , level),
