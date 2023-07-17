@@ -2435,9 +2435,9 @@ function enemydisplay(enemy_team_id){
 
     /*-- 参考线横向/纵向线条 --*/
     for(var i = 0; i <= 300 / 25; i++){ dcoordinator(3, "#444444", 0, i);}
-    for(var i = 0; i <= 3600/100; i++){
-        dcoordinator(2, "#444444", i*4, 0);
-        dcoordinator(6, "#444444", i*4, -1, i*4-3);}
+    for(var i = 0; i <= 4800/ 25; i++){
+        dcoordinator(2, "#444444", i, 0);
+        dcoordinator(6, "#444444", i, -1, i-3);}
     /*-- 我方位置 --*/
     [1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(pos => {
       const {x: x, y: y} = numpadPositionToDisplayCoordinates[pos];
@@ -2730,30 +2730,30 @@ function dcoordinator(type, color, x, y, z){
     con.beginPath();
     switch(type){
         case 1: {
-            con.arc((3 + x)*50, (11 - y)*25, 3, 0, 2*Math.PI);
+            con.arc((3 + x)*25, (11 - y)*25, 3, 0, 2*Math.PI);
             con.fill();
         }break;
         case 2: {
-            con.moveTo(x*50, 0);
-            con.lineTo(x*50, 300);
+            con.moveTo(x*25, 0);
+            con.lineTo(x*25, 300);
         }break;
         case 3: {
             con.moveTo(0, y*25);
             con.lineTo(4800, y*25);
         }break;
         case 4: {
-            con.moveTo((3 + x)*50, 0);
-            con.lineTo((3 + x)*50, 300);
+            con.moveTo((3 + x)*25, 0);
+            con.lineTo((3 + x)*25, 300);
         }break;
         case 5: {
             con.lineWidth="0.5";
-            con.strokeText(z, (3 + x)*50, (11 - y)*25 - 5);
-            con.fillText(z, (3 + x)*50, (11 - y)*25 - 5);
+            con.strokeText(z, (3 + x)*25, (11 - y)*25 - 5);
+            con.fillText(z, (3 + x)*25, (11 - y)*25 - 5);
         }break;
         case 6: {
             con.lineWidth="0.5";
-            con.strokeText(z, x*50, 298);
-            con.fillText(z, x*50, 298);
+            con.strokeText(z, x*25, 298);
+            con.fillText(z, x*25, 298);
         }break;
         default: break;
     }
