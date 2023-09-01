@@ -2225,7 +2225,7 @@ function showDefenseDrill(mission) {
   });
 }
 
-function efectcal(enemy_team_id, levelOffset, armorCoef) {
+function efectcal(enemy_team_id, levelOffset=0, armorCoef=600) {
   var efect = 0;
   let data = [];
   Enemy_in_team_by_team_id[Number(enemy_team_id)].forEach(({enemy_character_type_id, level, number, def_percent}) => {
