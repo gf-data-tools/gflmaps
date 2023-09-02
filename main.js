@@ -350,10 +350,10 @@ const loadChibi = (code, redrawFunc) => {
 const loadData = async () => {
   const loadTextFile = (url) => fetch(url,{mode: 'no-cors'}).then((result) => result.text());
   const loadJsonFile = (url) => fetch(url,{mode: 'no-cors'}).then((result) => result.json());
-  const loadStcFile = (file) => loadJsonFile(`https://github.com/gf-data-tools/gf-data-${config.dataSource}/raw/main/stc/${file}`);
-  const loadCatchFile = (file) => loadJsonFile(`https://github.com/gf-data-tools/gf-data-${config.dataSource}/raw/main/catchdata/${file}`);
-  const loadTextTable = (file) => loadTextFile(`https://github.com/gf-data-tools/gf-data-${config.langCode}/raw/main/asset/table/${file}`);
-  const loadCnTextTable = (file) => loadTextFile(`https://github.com/gf-data-tools/gf-data-ch/raw/main/asset/table/${file}`);
+  const loadStcFile = (file) => loadJsonFile(`https://raw.githubusercontent.com/gf-data-tools/gf-data-${config.dataSource}/main/stc/${file}`);
+  const loadCatchFile = (file) => loadJsonFile(`https://raw.githubusercontent.com/gf-data-tools/gf-data-${config.dataSource}/main/catchdata/${file}`);
+  const loadTextTable = (file) => loadTextFile(`https://raw.githubusercontent.com/gf-data-tools/gf-data-${config.dataSource}/main/asset/table/${file}`);
+  const loadCnTextTable = (file) => loadTextFile(`https://raw.githubusercontent.com/gf-data-tools/gf-data-ch/main/asset/table/${file}`);
   
 
   const loaders = {
