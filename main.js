@@ -283,17 +283,19 @@ const calculateTheaterLevelAdjustments = () => {
   theaterAreaToLevelAdjustments = {};
   
   Theater_area.forEach((area) => {
-    const levelsMatch = area.enemy_lv.match(/^(-?\d+),.*,(-?\d+)$/);
+    eval(`levelsMatch = [${area.enemy_lv}];`)
+    // const levelsMatch = area.enemy_lv.match(/^(-?\d+),.*,(-?\d+)$/);
     const teamMatch = area.enemy_group.matchAll(/(?:^|,)(\d+)-/g);
     if (levelsMatch) {
       theaterAreaToLevelAdjustments[area.id] = {
-        min: Number(levelsMatch[1]),
-        max: Number(levelsMatch[2]),
+        min: Math.min.apply(null, levelsMatch),
+        max: Math.max.apply(null, levelsMatch),
+        levels: levelsMatch,
         enemyTeamIds: [...teamMatch].map((match) => Number(match[1])),
       };
     }
   });
-  //console.log(theaterAreaToLevelAdjustments);
+  // console.log(theaterAreaToLevelAdjustments);
 };
 
 const calculateDefDrillTeamLevels = () => {
@@ -1050,12 +1052,14 @@ function missioncreat(){
       .map(([k, v]) => `<option value="${k}" ${initialCampaign == k ? "selected" : ""}>${v}</option>`).join("");
     var missionOptionsHtml = missionOptions.map((opt) => `<option value="${opt.value}" ${initialMission == opt.value ? "selected" : ""}>${opt.innerHTML}</option>`).join("");
 
-    var output = `<div style="display:inline-block; padding:6.5px; background:#E0E0E0; color:black; position:relative; top:1px; cursor:default;">${UI_TEXT["map_select"]} ▷</div>
-            <div class="eselect"><select id="campaignselect" name="campaignselect">${campaignOptionsHtml}</select></div>
-            <div class="eselect"><select id="missionselect" name="missionselect">${missionOptionsHtml}</select></div>
-
-            <div class="eselect" style="width:85px; display:none;"><select id="layerselect" name="layerselect" style="display:block;"></select></div>
-            <div id="packselect" style="inline-block; user-select:none; cursor:default; margin:"></div>`;
+    var output = `
+      <div style="display:inline-block; padding:6.5px; background:#E0E0E0; color:black; position:relative; top:1px; cursor:default;">${UI_TEXT["map_select"]} ▷</div>
+      <div class="eselect"><select id="campaignselect" name="campaignselect">${campaignOptionsHtml}</select></div>
+      <div class="eselect"><select id="missionselect" name="missionselect">${missionOptionsHtml}</select></div>
+      <div class="eselect" style="width:85px; display:none;"><select id="layerselect" name="layerselect" style="display:block;"></select></div>
+      ${UI_TEXT["turnselect"]} <input class="eselect" id="turnselect" type="number" min="1" step="1" value="1" style="border:none; width:6em; padding:10px; background-color:#e0e0e0;">
+      <div id="packselect" style="inline-block; user-select:none; cursor:default; margin:"></div>
+    `;
 
     $("#campaignchose").html(output);
 
@@ -1085,6 +1089,16 @@ function missioncreat(){
       const mission = $("#missionselect").val();
       window.history.pushState({}, '', `#campaign=${campaign}&mission=${mission}`);
 
+      updatemap();
+    });
+
+    $("#turnselect").change(function(){
+      // CHANGE FROM GFWIKI: Campaign/map select now goes through URL state.
+      const campaign = $("#campaignselect").val();
+      const mission = $("#missionselect").val();
+      window.history.pushState({}, '', `#campaign=${campaign}&mission=${mission}`);
+
+      enemydisplay(Number($("#enemyselect").val()));
       updatemap();
     });
     $(window).on('hashchange', function() {
@@ -2227,9 +2241,14 @@ function showDefenseDrill(mission) {
 
 function efectcal(enemy_team_id, levelOffset=0, armorCoef=600) {
   var efect = 0;
-  let data = [];
+  if (Number($("#campaignselect").val()) < 6000){
+    turn = $("#turnselect").val()
+    teamData = Enemy_team_map[enemy_team_id];
+    eval(`correction_turn={${teamData["correction_turn"]}}`)
+    levelOffset = correction_turn[Number(turn)] || 0
+  }
   Enemy_in_team_by_team_id[Number(enemy_team_id)].forEach(({enemy_character_type_id, level, number, def_percent}) => {
-    var level = Number(level) + (levelOffset || 0);
+    level = level+levelOffset
     var charatype = Enemy_character_type_by_id[enemy_character_type_id];
 
     var attr_number = Number(number);
@@ -2655,6 +2674,13 @@ function enemydisplay(enemy_team_id){
             def: getTheaterEnemyAttributeRange(charatype, "def", level, adjustments),
           };
         } else {
+          teamData = Enemy_team.find((team) => team.id === Number(enemy_team_id));
+          if (teamData) {
+            var turn = $("#turnselect").val()
+            eval(`correction_turn={${teamData["correction_turn"]}}`)
+            levelOffset = correction_turn[Number(turn)] || 0
+            level = level + levelOffset
+          }
           displayedValues = {
             level: level,
             hp: bround(enemyattribute(charatype , "maxlife" , level)),
