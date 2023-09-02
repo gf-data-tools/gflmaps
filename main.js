@@ -348,8 +348,8 @@ const loadChibi = (code, redrawFunc) => {
 };
 
 const loadData = async () => {
-  const loadTextFile = (url) => fetch(url,{mode: 'no-cors'}).then((result) => result.text());
-  const loadJsonFile = (url) => fetch(url,{mode: 'no-cors'}).then((result) => result.json());
+  const loadTextFile = (url) => fetch(url,{mode: 'cors'}).then((result) => result.text());
+  const loadJsonFile = (url) => fetch(url,{mode: 'cors'}).then((result) => result.json());
   const loadStcFile = (file) => loadJsonFile(`https://raw.githubusercontent.com/gf-data-tools/gf-data-${config.dataSource}/main/stc/${file}`);
   const loadCatchFile = (file) => loadJsonFile(`https://raw.githubusercontent.com/gf-data-tools/gf-data-${config.dataSource}/main/catchdata/${file}`);
   const loadTextTable = (file) => loadTextFile(`https://raw.githubusercontent.com/gf-data-tools/gf-data-${config.dataSource}/main/asset/table/${file}`);
