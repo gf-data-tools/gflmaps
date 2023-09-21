@@ -36,6 +36,7 @@
     "2009": "[模拟] 生涯任务教程",
     "2010": "[模拟] 防御演习",
     "2011": "[常驻] 灰域探查",
+    "2012": "[模拟] 装甲靶場",
 
     "3001": "[主线] 魔方行动",
     "3002": "[主线] 失温症",
@@ -113,6 +114,7 @@
   "mission_info_gk_limit": "人形梯队上限",
   "mission_info_hoc_limit": "重装部队上限",
   "mission_info_coalition_limit": "融合势力梯队上限",
+  "mission_info_vehicle_limit": "机动装甲上限",
   "mission_info_banned": "0",
   "mission_info_unlimited": "∞",
   "mission_info_total_team_limit": "梯队总数上限",
