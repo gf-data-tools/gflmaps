@@ -564,6 +564,7 @@ function convertGameCampaignToUiCampaign(gameCampaign) {
     // Summer mini-event
     case -40: return 5040;
     // DR
+    case -63: // DR+
     case -41: return 3041;
     // Halloween mini-event 2
     case -42: return 5042;
@@ -601,6 +602,7 @@ function convertGameCampaignToUiCampaign(gameCampaign) {
     // -60 is PL+
     case -61: return 5061;
     case -62: return 5062;
+    // -63 is DR+
     // Grey Zone
     case -404: return 2011;
     // Tutorials
