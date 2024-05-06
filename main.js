@@ -571,6 +571,7 @@ function convertGameCampaignToUiCampaign(gameCampaign) {
     // The Division
     case -43: return 4043;
     // MS
+    case -65: // MS+
     case -44: return 3044;
     // -45 is CT+
     // Jashin-chan
@@ -603,6 +604,12 @@ function convertGameCampaignToUiCampaign(gameCampaign) {
     case -61: return 5061;
     case -62: return 5062;
     // -63 is DR+
+    case -64: return 4064;
+    // -65 is MS+
+    // -66
+    // -67
+    // Summer Garden
+    case -68: return 3068;
     // Grey Zone
     case -404: return 2011;
     // Tutorials
@@ -2267,6 +2274,7 @@ function efectcal(enemy_team_id, levelOffset=0, armorCoef=600) {
   Enemy_in_team_by_team_id[Number(enemy_team_id)].forEach(({enemy_character_type_id, level, number, def_percent}) => {
     level = level+levelOffset
     var charatype = Enemy_character_type_by_id[enemy_character_type_id];
+    if (!charatype) return; 
 
     var attr_number = Number(number);
     var attr_pow = enemyattribute(charatype , "pow" , level);
